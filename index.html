@@ -79,6 +79,7 @@
 
 <script>
 const CONSUMPTION = 1.8; // km per litre
+const RESERVE = 30;      // Litres to keep in reserve
 
 function calculate() {
     const km = parseFloat(document.getElementById("km").value);
@@ -90,19 +91,20 @@ function calculate() {
     }
 
     const litresNeeded = km / CONSUMPTION;
-    const balance = tank - litresNeeded;
+    const availableFuel = tank - RESERVE; // subtract reserve
+    const balance = availableFuel - litresNeeded;
 
     if (balance >= 0) {
         document.getElementById("result").innerHTML = `
             <strong>Trip Possible ✅</strong><br>
             Diesel Needed: ${litresNeeded.toFixed(1)} L<br>
-            Diesel Remaining: ${balance.toFixed(1)} L
+            Diesel Remaining (after reserve): ${balance.toFixed(1)} L
         `;
     } else {
         document.getElementById("result").innerHTML = `
             <strong>Not Enough Diesel ❌</strong><br>
             Diesel Needed: ${litresNeeded.toFixed(1)} L<br>
-            Extra Required: ${Math.abs(balance).toFixed(1)} L
+            Extra Required (to maintain 30L reserve): ${Math.abs(balance).toFixed(1)} L
         `;
     }
 }
