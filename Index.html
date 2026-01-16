@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Diesel Trip Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f0f0f;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .app {
+        background: #1b1b1b;
+        padding: 20px;
+        border-radius: 12px;
+        width: 320px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    label {
+        font-size: 14px;
+        margin-top: 10px;
+        display: block;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: none;
+        font-size: 16px;
+    }
+    button {
+        width: 100%;
+        margin-top: 15px;
+        padding: 12px;
+        background: #f5c400;
+        color: #000;
+        font-size: 16px;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+    .result {
+        margin-top: 15px;
+        padding: 12px;
+        background: #111;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+    <h2>Diesel Check</h2>
+
+    <label>Kilometres to Travel</label>
+    <input type="number" id="km" placeholder="e.g. 540">
+
+    <label>Litres Currently in Tank</label>
+    <input type="number" id="tank" placeholder="e.g. 300">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+const CONSUMPTION = 1.8; // km per litre
+
+function calculate() {
+    const km = parseFloat(document.getElementById("km").value);
+    const tank = parseFloat(document.getElementById("tank").value);
+
+    if (isNaN(km) || isNaN(tank)) {
+        document.getElementById("result").innerHTML = "Please enter valid numbers.";
+        return;
+    }
+
+    const litresNeeded = km / CONSUMPTION;
+    const balance = tank - litresNeeded;
+
+    if (balance >= 0) {
+        document.getElementById("result").innerHTML = `
+            <strong>Trip Possible ✅</strong><br>
+            Diesel Needed: ${litresNeeded.toFixed(1)} L<br>
+            Diesel Remaining: ${balance.toFixed(1)} L
+        `;
+    } else {
+        document.getElementById("result").innerHTML = `
+            <strong>Not Enough Diesel ❌</strong><br>
+            Diesel Needed: ${litresNeeded.toFixed(1)} L<br>
+            Extra Required: ${Math.abs(balance).toFixed(1)} L
+        `;
+    }
+}
+</script>
+
+</body>
+</html>
