@@ -79,7 +79,7 @@
 
 <script>
 const CONSUMPTION = 1.8; // km per litre
-const RESERVE = 30;      // Litres to keep in reserve
+const RESERVE = 50;      // Litres to keep in reserve
 
 function calculate() {
     const km = parseFloat(document.getElementById("km").value);
@@ -104,7 +104,7 @@ function calculate() {
         document.getElementById("result").innerHTML = `
             <strong>Not Enough Diesel ❌</strong><br>
             Diesel Needed: ${litresNeeded.toFixed(1)} L<br>
-            Extra Required (to maintain 30L reserve): ${Math.abs(balance).toFixed(1)} L
+            Extra Required (to maintain 50L reserve): ${Math.abs(balance).toFixed(1)} L
         `;
     }
 }
